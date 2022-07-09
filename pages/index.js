@@ -6,8 +6,6 @@ import styles from '../styles/Home.module.css'
 
 export default function Home() {
 
-  console.log(ReadProfile);
-
   const { currentAccount, connectWallet } = useContext(MainContext);
 
   const getTruncatedAddress = (
@@ -48,9 +46,7 @@ export default function Home() {
         }
       </header>
       <main className={styles.main}>
-        <button className={styles.button} onClick={ReadProfile} >
-          Read Profile
-        </button>
+        <ReadProfile />
       </main>
     </div>
   )

@@ -5,19 +5,23 @@ import { IDX } from '@ceramicstudio/idx';
 
 import styles from '../styles/Home.module.css'
 
-export const ReadProfile = async () => {
+export const ReadProfile = () => {
 
-    const { currentAccount, endpoint } = useContext(MainContext);
-
+    const { currentAccount } = useContext(MainContext);
     const [name, setName] = useState('');
     const [pfp, setPFP] = useState('');
     const [loaded, setLoaded] = useState(false);
+    const [error, setError] = useState('');
+
+    // Define endpoint
+    const endpoint = "https://ceramic-clay.3boxlabs.com"
 
     const ceramic = new CeramicClient(endpoint);
+    const idx = new IDX({ ceramic });
 
     const fetchData = useCallback(async () => {
+
         try {
-            const idx = new IDX({ ceramic });
             const data = await idx.get(
                 'basicProfile',
                 `${currentAccount}@eip155:1`,
@@ -28,17 +32,24 @@ export const ReadProfile = async () => {
             if (data.name) { setName(data.name) };
             if (data.avatar) { setPFP(data.avatar) };
         } catch (error) {
-            console.log('error :', error);
+            console.log('error :', error.message);
             setLoaded(true);
+            setError(error.message);
         }
     }, [currentAccount]);
 
-    console.log("oustide");
-
     useEffect(() => {
-        console.log("inside");
         if (currentAccount) {
             fetchData();
         }
     }, [currentAccount, fetchData]);
+
+    return (
+        <>
+            <button className={styles.button} onClick={fetchData} >
+                Read Profile
+            </button>
+            {error && <div style={{ marginTop: '20px', color: 'red' }}>Error: {error}</div>}
+        </>
+    )
 };

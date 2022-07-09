@@ -10,9 +10,6 @@ import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
 
-  // Define endpoint
-  const endpoint = "https://ceramic-clay.3boxlabs.com"
-
   const [currentAccount, setCurrentAccount] = useState('')
 
   const connectWallet = async () => {
@@ -36,8 +33,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <MainContext.Provider value={{
       currentAccount,
-      connectWallet,
-      endpoint
+      connectWallet
     }}>
       <Component {...pageProps} />
     </MainContext.Provider>
