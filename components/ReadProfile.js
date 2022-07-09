@@ -19,6 +19,8 @@ export const ReadProfile = () => {
     const ceramic = new CeramicClient(endpoint);
     const idx = new IDX({ ceramic });
 
+    const data = {};
+
     const fetchData = useCallback(async () => {
 
         try {
@@ -27,10 +29,13 @@ export const ReadProfile = () => {
                 `${currentAccount}@eip155:1`,
             );
 
+            setError('');
             console.log(data);
 
-            if (data.name) { setName(data.name) };
-            if (data.avatar) { setPFP(data.avatar) };
+            if (data.name) data['name'] = data.name;
+            if (data.avatar) data['avatar'] = data.avatar;
+            // if (data.name) setName(data.name);
+            // if (data.avatar) setPFP(data.avatar);
         } catch (error) {
             console.log('error :', error.message);
             setLoaded(true);
@@ -46,9 +51,16 @@ export const ReadProfile = () => {
 
     return (
         <>
-            <button className={styles.button} onClick={fetchData} >
-                Read Profile
-            </button>
+            {data.length != undefined ?
+                <div>
+                    <div>{data.name}</div>
+                    <div>{data.avatar}</div>
+                </div>
+                :
+                <button className={styles.button} onClick={fetchData} >
+                    Read Profile
+                </button>
+            }
             {error && <div style={{ marginTop: '20px', color: 'red' }}>Error: {error}</div>}
         </>
     )
