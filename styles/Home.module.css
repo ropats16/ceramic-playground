@@ -24,6 +24,11 @@
 
 .button {
   padding: 0.5rem;
+  margin: 2em auto;
+}
+
+.input {
+  margin: 0.5em auto;
 }
 
 .footer {

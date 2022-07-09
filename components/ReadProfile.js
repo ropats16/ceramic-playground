@@ -8,8 +8,6 @@ import styles from '../styles/Home.module.css'
 export const ReadProfile = () => {
 
     const { currentAccount } = useContext(MainContext);
-    const [name, setName] = useState('');
-    const [pfp, setPFP] = useState('');
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState('');
 
@@ -22,7 +20,6 @@ export const ReadProfile = () => {
     const data = {};
 
     const fetchData = useCallback(async () => {
-
         try {
             const data = await idx.get(
                 'basicProfile',
@@ -51,6 +48,7 @@ export const ReadProfile = () => {
 
     return (
         <>
+            {error && <div style={{ color: 'red' }}>Error: {error}</div>}
             {data.length != undefined ?
                 <div>
                     <div>{data.name}</div>
@@ -61,7 +59,6 @@ export const ReadProfile = () => {
                     Read Profile
                 </button>
             }
-            {error && <div style={{ marginTop: '20px', color: 'red' }}>Error: {error}</div>}
         </>
     )
 };

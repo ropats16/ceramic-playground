@@ -1,12 +1,12 @@
 import Head from 'next/head'
 import { useContext } from 'react';
-import { ReadProfile } from '../components';
+import { ReadProfile, UpdateProfile } from '../components';
 import { MainContext } from '../context';
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
 
-  const { currentAccount, connectWallet } = useContext(MainContext);
+  const { currentAccount, tryAuthenticate } = useContext(MainContext);
 
   const getTruncatedAddress = (
     address,
@@ -39,13 +39,14 @@ export default function Home() {
           </div>
           ) :
           (
-            <button className={styles.button} onClick={connectWallet}>
-              Connect Wallet
+            <button className={styles.button} onClick={tryAuthenticate}>
+              Connect Wallet and Authenticate
             </button>
           )
         }
       </header>
       <main className={styles.main}>
+        <UpdateProfile />
         <ReadProfile />
       </main>
     </div>
